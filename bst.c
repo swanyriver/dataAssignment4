@@ -143,9 +143,9 @@ struct Node *_addNode(struct Node *cur, TYPE val)
     //recursive case
     int cmp = compare(val,cur->val);
     if(cmp <= 0 )   //val <= cur->val
-        cur->left = nodeAddBST(cur->left,  val);
+        cur->left = _addNode(cur->left,  val);
     else            //val > cur->val
-        cur->right = _nodeAddBST(cur->right, val);
+        cur->right = _addNode(cur->right, val);
 
     return cur;
 }
