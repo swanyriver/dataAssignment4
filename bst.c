@@ -124,8 +124,30 @@ int sizeBSTree(struct BSTree *tree) { return tree->cnt; }
  */
 struct Node *_addNode(struct Node *cur, TYPE val)
 {
-	/*write this*/
-	return NULL;
+
+    //NULL checking
+    assert(val);
+
+    //base case
+    if(cur == NULL){
+        struct Node* newNode = malloc(sizeof(struct Node));
+        assert(newNode);
+        newNode->left = NULL;
+        newNode->right = NULL;
+        newNode->val = val;
+
+
+        return newNode;
+    }
+
+    //recursive case
+    int cmp = compare(val,cur->val);
+    if(cmp <= 0 )   //val <= cur->val
+        cur->left = nodeAddBST(cur->left,  val);
+    else            //val > cur->val
+        cur->right = _nodeAddBST(cur->right, val);
+
+    return cur;
 }
 
 /*
@@ -158,8 +180,21 @@ void addBSTree(struct BSTree *tree, TYPE val)
 /*----------------------------------------------------------------------------*/
 int containsBSTree(struct BSTree *tree, TYPE val)
 {
-	/*write this*/
-		return 0;
+    int cmp;
+
+    assert(tree);
+    assert(val);
+
+    struct Node *cur = tree->root;
+	while(cur!=NULL){
+	    cmp = compare(val,cur->val);
+
+	    if(cmp == 0) return 1;              //val == cur->val
+	    else if(cmp < 0) cur = cur->left;   //val < cur->val
+	    else cur = cur->right;              //val > cur->val
+	}
+
+	return 0; //cur == NULL value not found
 }
 
 /*
@@ -173,7 +208,7 @@ int containsBSTree(struct BSTree *tree, TYPE val)
 /*----------------------------------------------------------------------------*/
 TYPE _leftMost(struct Node *cur)
 {
-	/*write this*/
+	/*FIXME*/
 	return NULL;
 }
 
@@ -192,7 +227,7 @@ Note:  If you do this iteratively, the above hint does not apply.
 /*----------------------------------------------------------------------------*/
 struct Node *_removeLeftMost(struct Node *cur)
 {
-	/*write this*/
+	/*FIXME*/
 	return NULL;
 }
 /*
@@ -207,7 +242,7 @@ struct Node *_removeLeftMost(struct Node *cur)
 /*----------------------------------------------------------------------------*/
 struct Node *_removeNode(struct Node *cur, TYPE val)
 {
-	/*write this*/
+	/*FIXME*/
 		return NULL;
 
 }

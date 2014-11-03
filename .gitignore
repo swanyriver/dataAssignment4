@@ -1,3 +1,7 @@
+prog
+
+*.o
+
 .cproject
 
 .project
