@@ -208,8 +208,12 @@ int containsBSTree(struct BSTree *tree, TYPE val)
 /*----------------------------------------------------------------------------*/
 TYPE _leftMost(struct Node *cur)
 {
-	/*FIXME*/
-	return NULL;
+	if (cur->left == NULL){ //base case
+	    return cur->val;
+	}
+	else{                   //recursive case
+	    return cur->left;
+	}
 }
 
 
@@ -227,8 +231,16 @@ Note:  If you do this iteratively, the above hint does not apply.
 /*----------------------------------------------------------------------------*/
 struct Node *_removeLeftMost(struct Node *cur)
 {
-	/*FIXME*/
-	return NULL;
+    if(cur->left != NULL){
+       cur->left = _removeLeftMost(cur->left);
+       return cur;
+   }
+   else{
+       struct Node *tmp = cur->right;
+       free(cur);
+       return tmp;
+   }
+
 }
 /*
  recursive helper function to remove a node from the tree
@@ -242,9 +254,38 @@ struct Node *_removeLeftMost(struct Node *cur)
 /*----------------------------------------------------------------------------*/
 struct Node *_removeNode(struct Node *cur, TYPE val)
 {
-	/*FIXME*/
-		return NULL;
+    int cmp = compare(val,cur->val);
 
+    //base case, value found
+    if(cmp == 0){   //val == cur->val
+        //free value
+        free(cur->val); //todo should be a dealloc function in compare.c
+
+        if(cur->right == NULL && cur->left == NULL){    //value is in leaf
+            free(cur);
+            return NULL;
+        }
+        else if(cur->right == NULL){
+            //no right side tree, parents left will point to childs left
+            struct Node *tmp = cur->left;
+            free(cur);
+            return tmp;
+        }
+        else{
+            //value is replaced with leftmost child of right tree
+            //and leftmost child of right tree if de-alocated
+            cur->val = _leftMost(cur->right);
+            cur->right = _removeLeftMost(cur->right);
+        }
+    }
+
+    //recursive case, searching for value
+    if(cmp < 0 )   //val <= cur->val
+        cur->left = _removeNode(cur->left,  val);
+    else            //val > cur->val
+        cur->right = _removeNode(cur->right, val);
+
+    return cur;
 }
 /*
  function to remove a value from the binary search tree
