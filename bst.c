@@ -212,7 +212,7 @@ TYPE _leftMost(struct Node *cur)
 	    return cur->val;
 	}
 	else{                   //recursive case
-	    return cur->left;
+	    return _leftMost(cur->left);
 	}
 }
 
@@ -505,14 +505,26 @@ void testLeftMost() {
 	myData3.name = "righty";
 	myData4.number = 10;
 	myData4.name = "lefty of lefty";
+
+	printTree(tree);
     
 	printTestResult(compare(_leftMost(tree->root), &myData4) == 0, "_leftMost", "left most of root");
     
+	printf("\n"); print_type(_leftMost(tree->root)); printf("  %d  <---\n\n", compare(_leftMost(tree->root), &myData4) );
+
+    printTree(tree);
+
 	printTestResult(compare(_leftMost(tree->root->left), &myData4) == 0, "_leftMost", "left most of left of root");
     
+    printTree(tree);
+
 	printTestResult(compare(_leftMost(tree->root->left->left), &myData4) == 0, "_leftMost", "left most of left of left of root");
-    
+
+    printTree(tree);
+
 	printTestResult(compare(_leftMost(tree->root->right), &myData3) == 0, "_leftMost", "left most of right of root");
+
+    printTree(tree);
 
 }
 
@@ -581,6 +593,16 @@ int main(int argc, char *argv[]){
 	
 	printf("\n");
     //testRemoveNode();
+
+	testAddNode();
+    printf("\n");
+    testContainsBSTree();
+    printf("\n");
+    testLeftMost();
+    printf("\n");
+    testRemoveLeftMost();
+    printf("\n");
+    testRemoveNode();
     
 	
 	return 0;
