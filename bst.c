@@ -208,6 +208,8 @@ int containsBSTree(struct BSTree *tree, TYPE val)
 /*----------------------------------------------------------------------------*/
 TYPE _leftMost(struct Node *cur)
 {
+    assert(cur);
+
 	if (cur->left == NULL){ //base case
 	    return cur->val;
 	}
@@ -231,6 +233,8 @@ Note:  If you do this iteratively, the above hint does not apply.
 /*----------------------------------------------------------------------------*/
 struct Node *_removeLeftMost(struct Node *cur)
 {
+    assert(cur);
+
     if(cur->left != NULL){
        cur->left = _removeLeftMost(cur->left);
        return cur;
@@ -258,8 +262,6 @@ struct Node *_removeNode(struct Node *cur, TYPE val)
 
     //base case, value found
     if(cmp == 0){   //val == cur->val
-        //free value
-        free(cur->val); //todo should be a dealloc function in compare.c
 
         if(cur->right == NULL && cur->left == NULL){    //value is in leaf
             free(cur);
